@@ -35,7 +35,7 @@ export default function Home() {
       const daily = response.data.daily
       const formattedDays = daily.time.map((date, index) => ({
         date,
-        condition: "",
+        condition: daily.weathercode[index],
         minTemp: daily.temperature_2m_min[index],
         maxTemp: daily.temperature_2m_max[index],
         wind: daily.wind_speed_10m_max[index],
@@ -43,6 +43,7 @@ export default function Home() {
 
       setDays(formattedDays)
       setError(null)
+      console.log(formattedDays)
     } catch (error) {
       setError("Oops! Something went wrong!")
     } finally {

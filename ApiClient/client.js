@@ -27,7 +27,7 @@ export default class ApiClient {
             latitude : location.latitude,
             longitude : location.longitude,
             daily : "weathercode,temperature_2m_max,temperature_2m_min,wind_speed_10m_max",
-            timezone: "Europe/London"
+            timezone: "GB"
         }
         return this.getRequest("", params)
     }
