@@ -12,6 +12,8 @@ export default function Home() {
     "longitude": -0.1257
   })
   const [error, setError] = useState(null)
+  const [recievedUserData, setRecievedUserData] = useState(false)
+  const [selectedCity, setSelectedCity] = useState("London")
   const client = new ApiClient()
 
   const cityCoords = {
@@ -22,16 +24,34 @@ export default function Home() {
   };
 
   const changeLocation = (cityName) => {
-  if (cityCoords[cityName]) {
+  if (cityName === "Your Location"){
+    getUserLocation()
+  } else if (cityCoords[cityName]) {
     setLocation(cityCoords[cityName]);
   }
   };
+
+  const getUserLocation = () => {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+      const userCoords = { 
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      }
+      setLocation(userCoords)
+      setRecievedUserData(true)
+    },
+    (error) => {
+      console.log("Geolocation error: ", error)
+      setRecievedUserData(false)
+    }
+  )
+  }
 
   const fetchDays = async () => {
     setLoading(true)
     try {
       const response = await client.getForecast({location})
-      console.log("API response:", response.data)
       const daily = response.data.daily
       const formattedDays = daily.time.map((date, index) => ({
         date,
@@ -43,13 +63,22 @@ export default function Home() {
 
       setDays(formattedDays)
       setError(null)
-      console.log(formattedDays)
     } catch (error) {
       setError("Oops! Something went wrong!")
     } finally {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    getUserLocation()
+  }, [])
+
+  useEffect(() => {
+    if (recievedUserData) {
+      setSelectedCity("Your Location")
+    }
+  }, [recievedUserData])
 
   useEffect(() => {
     fetchDays()
@@ -62,8 +91,15 @@ export default function Home() {
           {error}
         </div>
       }
-      <select className="px-4 py-2 rounded-md shadow-md font-medium"
-        onChange={(e) => changeLocation(e.target.value)}>
+      <select value={selectedCity} className="px-4 py-2 rounded-md shadow-md font-medium"
+        onChange={(e) => {
+          setSelectedCity(e.target.value)
+          changeLocation(e.target.value)
+        }}
+        >
+        { recievedUserData && (
+        <option value="Your Location">Your location</option> 
+        )}
         <option value="London">London</option> 
         <option value="New York">New York</option>
         <option value="Paris">Paris</option>
