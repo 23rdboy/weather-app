@@ -2,6 +2,12 @@
 import Card from "./components/Card";
 import ApiClient from "../../ApiClient/client"
 import { useState, useEffect } from "react"
+import { Sixtyfour } from "next/font/google";
+
+const sixtyfourFont = Sixtyfour({
+  subsets: ["latin"],
+  weight: "400"
+});
 
 export default function Home() {
 
@@ -85,14 +91,14 @@ export default function Home() {
   }, [location])
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen bg-blue-300">
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-yellow-50">
       {
         error && <div className="text-red-500">
           {error}
         </div>
       }
-      <h1 className="text-3xl font-bold m-10">Weather App</h1>
-      <select value={selectedCity} className="px-4 py-2 rounded-md shadow-md font-medium bg-blue-200 border"
+      <h1 className={`text-center text-5xl mt-20 m-15 ${sixtyfourFont.className}`}>WEATHER FORECAST</h1>
+      <select value={selectedCity} className="px-4 py-2 mb-5 text-yellow-900 rounded-md shadow-md font-medium bg-yellow-200 border-yellow-400 border"
         onChange={(e) => {
           setSelectedCity(e.target.value)
           changeLocation(e.target.value)
