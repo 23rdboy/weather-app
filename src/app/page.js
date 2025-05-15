@@ -113,7 +113,7 @@ export default function Home() {
             <Card 
             key={index}
             date={day.date}
-            condition={day.condition}
+            weatherCode={day.condition}
             minTemp={`${day.minTemp}`}
             maxTemp={`${day.maxTemp}`}
             wind={`${day.wind}`}
