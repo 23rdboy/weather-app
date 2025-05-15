@@ -30,8 +30,8 @@ export default function WeatherCard({ date, maxTemp, minTemp, wind, weatherCode 
   };
 
   return (
-    <div className="p-4 border rounded shadow text-center">
-      <h3 className="font-semibold">{dayName}</h3>
+    <div className="p-4 border rounded shadow text-center bg-blue-200 w-100 m-1 shadow-md">
+      <h3 className="font-semibold text-2xl">{dayName}</h3>
       <p className="text-gray-500">{formattedDate}</p> {/* Display date in DD/MM/YYYY */}
       
       {/* Weather Icon */}

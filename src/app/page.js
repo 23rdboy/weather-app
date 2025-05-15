@@ -85,13 +85,14 @@ export default function Home() {
   }, [location])
 
   return (
-    <div className="relative flex flex-col items-center justify-center min-h-screen bg-blue-200">
+    <div className="relative flex flex-col items-center justify-center min-h-screen bg-blue-300">
       {
         error && <div className="text-red-500">
           {error}
         </div>
       }
-      <select value={selectedCity} className="px-4 py-2 rounded-md shadow-md font-medium"
+      <h1 className="text-3xl font-bold m-10">Weather App</h1>
+      <select value={selectedCity} className="px-4 py-2 rounded-md shadow-md font-medium bg-blue-200 border"
         onChange={(e) => {
           setSelectedCity(e.target.value)
           changeLocation(e.target.value)
@@ -113,9 +114,9 @@ export default function Home() {
             key={index}
             date={day.date}
             condition={day.condition}
-            minTemp={`${day.minTemp}º`}
-            maxTemp={`${day.maxTemp}º`}
-            wind={`${day.wind}mph`}
+            minTemp={`${day.minTemp}`}
+            maxTemp={`${day.maxTemp}`}
+            wind={`${day.wind}`}
             />
         ))
       )
