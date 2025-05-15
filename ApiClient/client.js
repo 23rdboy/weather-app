@@ -24,13 +24,14 @@ export default class ApiClient {
 
     async getForecast({location}){
         const params = {
-            latitude : location.latitude,
-            longitude : location.longitude,
-            daily : "weathercode,temperature_2m_max,temperature_2m_min,wind_speed_10m_max",
-            timezone: "GB"
+            latitude: location.latitude,
+            longitude: location.longitude,
+            daily: "weathercode,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,sunrise,sunset,precipitation_sum",
+            timezone: "auto"
         }
         return this.getRequest(base_url, "", params)
     }
+    
 
     async getLocationName({location}){
         const params = {

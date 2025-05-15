@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import { Gabarito } from "next/font/google";
 
 const gabaritoFont = Gabarito({
@@ -5,9 +7,13 @@ const gabaritoFont = Gabarito({
   weight: "400"
 });
 
+export default function WeatherCard({ date, maxTemp, minTemp, wind, weatherCode, sunrise, sunset, precipitation }) {
+  const [expanded, setExpanded] = useState(false);
 
-export default function WeatherCard({ date, maxTemp, minTemp, wind, weatherCode }) {
-  // Weather code to description mapping
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  };
+
   const weatherDescriptions = {
     0: 'Clear sky',
     1: 'Mainly clear',
@@ -39,16 +45,6 @@ export default function WeatherCard({ date, maxTemp, minTemp, wind, weatherCode 
     99: 'Thunderstorm',
   };
 
-  // Get the weather description from the mapping
-  const description = weatherDescriptions[weatherCode] || 'Unknown weather';
-
-  // Format the date as DD/MM/YYYY
-  const formattedDate = new Date(date).toLocaleDateString('en-GB');
-
-  // Get the day of the week
-  const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
-
-  // Weather icons mapping
   const icons = {
     0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
     45: '🌫️', 48: '🌫️', 
@@ -56,25 +52,34 @@ export default function WeatherCard({ date, maxTemp, minTemp, wind, weatherCode 
     61: '🌧️', 63: '🌧️', 65: '🌧️', 66: '🌧️', 67: '🌧️', 
     71: '❄️', 73: '❄️', 75: '❄️', 77: '❄️',
     80: '🌧️', 81: '🌧️', 82: '🌧️', 85: '❄️', 86: '❄️', 
-    95: '⛈️', 95: '⛈️', 95: '⛈️'
+    95: '⛈️', 96: '⛈️', 99: '⛈️'
   };
 
-  return (
-    <div className="p-4 border border-blue-400 rounded shadow text-center bg-blue-200 w-100 m-1 shadow-md">
-      <h3 className={`text-2xl ${gabaritoFont.className}`}>{dayName}</h3>
-      <p className="text-blue-500">{formattedDate}</p> {/* Display date in DD/MM/YYYY */}
-      
-      {/* Weather Icon */}
-      <div className="text-4xl my-2">
-        {icons[weatherCode] || '❓'}
-      </div>
+  const description = weatherDescriptions[weatherCode] || 'Unknown';
+  const formattedDate = new Date(date).toLocaleDateString('en-GB');
+  const dayName = new Date(date).toLocaleDateString('en-US', { weekday: 'long' });
 
-      {/* Weather Description */}
-      <p className="text-sm text-gray-700 mb-2">{description}</p> {/* Weather description here */}
-      
-      {/* Temperature and Wind speed */}
+  return (
+    <div 
+      onClick={toggleExpanded} 
+      className="p-4 border border-blue-400 rounded shadow text-center bg-blue-200 w-100 m-1 shadow-md cursor-pointer hover:bg-blue-300 transition"
+    >
+      <h3 className={`text-2xl ${gabaritoFont.className}`}>{dayName}</h3>
+      <p className="text-blue-500">{formattedDate}</p>
+      <div className="text-4xl my-2">{icons[weatherCode] || '❓'}</div>
+      <p className="text-sm text-gray-700 mb-2">{description}</p>
       <p className="text-lg">{maxTemp}°C / {minTemp}°C</p>
       <p className="text-sm text-gray-700">💨 {wind} km/h</p>
+
+      {expanded && (
+  <div>
+    <p>🌅 Sunrise: {sunrise}</p>
+    <p>🌇 Sunset: {sunset}</p>
+    <p>🌧 Precipitation: {precipitation} mm</p>
+  </div>
+)}
+
+
     </div>
   );
 }

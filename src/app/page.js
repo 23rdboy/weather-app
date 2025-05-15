@@ -59,6 +59,7 @@ export default function Home() {
     setLoading(true)
     try {
       const response = await client.getForecast({location})
+      console.log(response.data)
       const daily = response.data.daily
       const formattedDays = daily.time.map((date, index) => ({
         date,
@@ -66,7 +67,11 @@ export default function Home() {
         minTemp: daily.temperature_2m_min[index],
         maxTemp: daily.temperature_2m_max[index],
         wind: daily.wind_speed_10m_max[index],
-      }))
+        sunrise: daily.sunrise[index],
+        sunset: daily.sunset[index],
+        precipitation: daily.precipitation_sum[index],
+      }));
+      
 
       setDays(formattedDays)
       setError(null)
@@ -137,13 +142,16 @@ export default function Home() {
       ) : (
           days.map((day, index) => (
             <Card 
-            key={index}
-            date={day.date}
-            weatherCode={day.condition}
-            minTemp={`${day.minTemp}`}
-            maxTemp={`${day.maxTemp}`}
-            wind={`${day.wind}`}
-            />
+               key={index}
+               date={day.date}
+               weatherCode={day.condition}
+               minTemp={`${day.minTemp}`}
+               maxTemp={`${day.maxTemp}`}
+               wind={`${day.wind}`}
+               sunrise={day.sunrise}
+              sunset={day.sunset}
+              precipitation={day.precipitation} 
+              />
         ))
       )
     }
