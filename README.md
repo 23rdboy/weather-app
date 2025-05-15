@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🌤️ Weather Forecast App
 
-## Getting Started
+This is a simple weather forecast web application built using **React**, **Next.js**, and **Tailwind CSS**. It shows the weather forecast for the next few days based on your selected city using data from the [Open-Meteo API](https://open-meteo.com/).
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Single page application (SPA)
+- Select from a list of predefined cities 
+- Displays daily:
+  - Date and day of the week
+  - Weather icon
+  - Weather description (e.g., cloudy, sunny)
+  - Max/min temperature (°C)
+  - Wind speed (km/h)
+- Responsive layout using Tailwind CSS
+- Clean and beginner-friendly code structure
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Demo
 
-## Learn More
+📦 **GitHub Repository:** https://github.com/23rdboy/weather-app
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🛠️ Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Language**: JavaScript (no TypeScript)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Data Source**: [Open-Meteo API](https://open-meteo.com/)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🧑‍💻 How to Run Locally
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/23rdboy/weather-app.git
+   cd weather-app
+````
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server**
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser to view the app.
