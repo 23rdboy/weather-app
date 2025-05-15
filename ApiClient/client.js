@@ -1,7 +1,7 @@
 import axios from "axios"
-import { Lacquer } from "next/font/google"
 
 const base_url = "https://api.open-meteo.com/v1/forecast"
+const reverseGeocode_url = "https://nominatim.openstreetmap.org/reverse"
 
 export default class ApiClient {
     async responseStatusCheck(responseObject) {
@@ -11,9 +11,9 @@ export default class ApiClient {
         throw new Error(responseObject.statusText)
     }
 
-    async getRequest(endpoint, params = {}) {
+    async getRequest(url, endpoint, params = {}) {
         try {
-            const response = await axios.get(`${base_url}${endpoint}`, {
+            const response = await axios.get(`${url}${endpoint}`, {
                 params
             })
             return this.responseStatusCheck(response)
@@ -29,6 +29,16 @@ export default class ApiClient {
             daily : "weathercode,temperature_2m_max,temperature_2m_min,wind_speed_10m_max",
             timezone: "GB"
         }
-        return this.getRequest("", params)
+        return this.getRequest(base_url, "", params)
+    }
+
+    async getLocationName({location}){
+        const params = {
+            format: "json",
+            lat : location.latitude,
+            lon : location.longitude,
+            zoom: 12
+        }
+        return this.getRequest(reverseGeocode_url, "", params)
     }
 }

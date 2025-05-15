@@ -19,6 +19,7 @@ export default function Home() {
   })
   const [error, setError] = useState(null)
   const [recievedUserData, setRecievedUserData] = useState(false)
+  const [userLocationName, setUserLocationName] = useState("")
   const [selectedCity, setSelectedCity] = useState("London")
   const client = new ApiClient()
 
@@ -76,13 +77,25 @@ export default function Home() {
     }
   }
 
+  const fetchUserLocationName = async () => {
+    try {
+      const userLocationData = await client.getLocationName({location})
+      const locationName = userLocationData.data.address.town
+      setUserLocationName(locationName)
+      setSelectedCity(locationName)
+    } catch (error) {
+      console.log("Error fetching user location name: ", error)
+      setSelectedCity("Your Location")
+    }
+  }
+
   useEffect(() => {
     getUserLocation()
   }, [])
 
   useEffect(() => {
     if (recievedUserData) {
-      setSelectedCity("Your Location")
+      fetchUserLocationName()
     }
   }, [recievedUserData])
 
@@ -105,7 +118,7 @@ export default function Home() {
         }}
         >
         { recievedUserData && (
-        <option value="Your Location">Your location</option> 
+        <option value="Your Location">{userLocationName}</option> 
         )}
         <option value="London">London</option> 
         <option value="New York">New York</option>
