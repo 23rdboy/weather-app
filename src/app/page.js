@@ -80,9 +80,16 @@ export default function Home() {
   const fetchUserLocationName = async () => {
     try {
       const userLocationData = await client.getLocationName({location})
-      const locationName = userLocationData.data.address.town
-      setUserLocationName(locationName)
-      setSelectedCity(locationName)
+      let userLocation = ""
+      if (userLocationData.data.address.town) {
+        userLocation = userLocationData.data.address.town
+      } else if (userLocationData.data.address.city) {
+        userLocation = userLocationData.data.address.city
+      } else {
+        userLocation = "Your Location"
+      }
+      setUserLocationName(userLocation)
+      setSelectedCity(userLocation)
     } catch (error) {
       console.log("Error fetching user location name: ", error)
       setSelectedCity("Your Location")
