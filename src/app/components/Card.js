@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Gabarito } from "next/font/google";
+import { Markazi_Text } from "next/font/google";
 
-const gabaritoFont = Gabarito({
+const markaziTextFont = Markazi_Text({
   subsets: ["latin"],
   weight: "400"
 });
@@ -64,7 +64,7 @@ export default function WeatherCard({ date, maxTemp, minTemp, wind, weatherCode,
       onClick={toggleExpanded} 
       className="p-4 border border-blue-400 rounded shadow text-center bg-blue-200 w-100 m-1 shadow-md cursor-pointer hover:bg-blue-300 transition"
     >
-      <h3 className={`text-2xl ${gabaritoFont.className}`}>{dayName}</h3>
+      <h3 className={`text-3xl ${markaziTextFont.className}`}>{dayName}</h3>
       <p className="text-blue-500">{formattedDate}</p>
       <div className="text-4xl my-2">{icons[weatherCode] || '❓'}</div>
       <p className="text-sm text-gray-700 mb-2">{description}</p>
