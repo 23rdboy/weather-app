@@ -148,8 +148,8 @@ export default function Home() {
                minTemp={`${day.minTemp}`}
                maxTemp={`${day.maxTemp}`}
                wind={`${day.wind}`}
-               sunrise={day.sunrise}
-              sunset={day.sunset}
+               sunrise={new Date(day.sunrise).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              sunset={new Date(day.sunset).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               precipitation={day.precipitation} 
               />
         ))
