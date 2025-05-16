@@ -162,14 +162,14 @@ export default function Home() {
       ) : (
           days.map((day, index) => (
             <Card 
-              key={index}
-              date={day.date}
-              weatherCode={day.condition}
-              minTemp={`${day.minTemp}`}
-              maxTemp={`${day.maxTemp}`}
-              wind={`${day.wind}`}
-              sunrise={day.sunrise}
-              sunset={day.sunset}
+               key={index}
+               date={day.date}
+               weatherCode={day.condition}
+               minTemp={`${day.minTemp}`}
+               maxTemp={`${day.maxTemp}`}
+               wind={`${day.wind}`}
+               sunrise={new Date(day.sunrise).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              sunset={new Date(day.sunset).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
               precipitation={day.precipitation} 
               />
         ))
