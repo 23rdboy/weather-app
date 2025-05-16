@@ -59,7 +59,6 @@ export default function Home() {
     setLoading(true)
     try {
       const response = await client.getForecast({location})
-      console.log(response.data)
       const daily = response.data.daily
       const formattedDays = daily.time.map((date, index) => ({
         date,
@@ -83,6 +82,22 @@ export default function Home() {
   }
 
   const fetchUserLocationName = async () => {
+    const fetchedLocationName = localStorage.getItem("storedLocationName")
+    if (fetchedLocationName){
+      const parsedData = JSON.parse(fetchedLocationName)
+      const oneHour = 3600000
+      const timeNow = Date.now()
+
+      if (parsedData.name && parsedData.timestamp && timeNow - parsedData.timestamp < oneHour) {
+        console.log("Name found in local storage: ", parsedData.name)
+        setUserLocationName(parsedData.name)
+        setSelectedCity(parsedData.name)
+        return
+      } else {
+        console.log("Locally stored name expired. Fetching new name.")
+        localStorage.removeItem("storedLocationName")
+      }
+    }
     try {
       const userLocationData = await client.getLocationName({location})
       let userLocation = ""
@@ -94,12 +109,17 @@ export default function Home() {
         userLocation = "Your Location"
       }
       setUserLocationName(userLocation)
+      const locationData = {
+        name: userLocation,
+        timestamp: Date.now()
+      }
+      localStorage.setItem("storedLocationName", JSON.stringify(locationData))
       setSelectedCity(userLocation)
     } catch (error) {
       console.log("Error fetching user location name: ", error)
       setSelectedCity("Your Location")
     }
-  }
+}
 
   useEffect(() => {
     getUserLocation()
@@ -142,13 +162,13 @@ export default function Home() {
       ) : (
           days.map((day, index) => (
             <Card 
-               key={index}
-               date={day.date}
-               weatherCode={day.condition}
-               minTemp={`${day.minTemp}`}
-               maxTemp={`${day.maxTemp}`}
-               wind={`${day.wind}`}
-               sunrise={day.sunrise}
+              key={index}
+              date={day.date}
+              weatherCode={day.condition}
+              minTemp={`${day.minTemp}`}
+              maxTemp={`${day.maxTemp}`}
+              wind={`${day.wind}`}
+              sunrise={day.sunrise}
               sunset={day.sunset}
               precipitation={day.precipitation} 
               />
